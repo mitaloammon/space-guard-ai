@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: space-guard-backend
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: development
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: space-guard-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    restart: unless-stopped
